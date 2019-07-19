@@ -21,3 +21,9 @@ Route::post('staff/save', 'StaffController@save');
 Route::get('staff/edit/{id}', 'StaffController@edit');
 Route::put('staff/update/{id}', 'StaffController@update');
 Route::get('staff/delete/{id}', 'StaffController@delete');
+
+//roles
+Route::get('roles', 'RolesController@index');
+Route::post('roles/save', 'RolesController@save');
+Route::post('roles/update/{id}', 'RolesController@update');
+Route::get('roles/delete/{id}', 'RolesController@delete');
