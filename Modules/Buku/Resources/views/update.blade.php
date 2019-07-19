@@ -6,39 +6,43 @@
         <h3 class="box-tittle">Add Data Buku</h3>
     </div>
     <div class="box-body">
-        <form method="post" action="{{url('buku/save')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('buku/update/save', $dataBuku->id_buku)}}" enctype="multipart/form-data">
             {{ csrf_field() }}
 
             <div class="form-group">
-                <input type="text" name="judul_buku" class="form-control" placeholder="Judul Buku" required></textarea>
+            <input type="text" name="judul_buku" value="{{$dataBuku->judul_buku}}" class="form-control" placeholder="Judul Buku" required></textarea>
             </div>
 
             <div class="form-group">
-                <input type="text" name="isbn" class="form-control" placeholder="ISBN" required></textarea>
+                <input type="text" name="isbn" value="{{$dataBuku->isbn}}" class="form-control" placeholder="ISBN" required></textarea>
             </div>
 
             <div class="form-group">
-                <input type="text" name="pengarang" class="form-control" placeholder="Pengarang" required>
+                <input type="text" name="pengarang" value="{{$dataBuku->pengarang}}" class="form-control" placeholder="Pengarang" required>
             </div>
 
             <div class="form-group">
-                <input type="text" name="penerbit" class="form-control" placeholder="penerbit" required>
+                <input type="text" name="penerbit" value="{{$dataBuku->penerbit}}" class="form-control" placeholder="penerbit" required>
             </div>
 
             <div class="form-group">
-                <input type="date" name="tanggal_terbit" class="form-control" placeholder="Tanggal Terbit" required>
+                <input type="date" name="tanggal_terbit" value="{{$dataBuku->tanggal_terbit}}" class="form-control" placeholder="Tanggal Terbit" required>
             </div>
 
             <div class="form-group">
                 <select class="form-control" name="klasifikasi" placeholder="Klasifikasi">
-                    @foreach ($dataKlasifikasi as $data)
-                        <option value="{{$data->id_klasifikasi}}">{{$data->nama_klasifikasi}}</option>
+                    @foreach ($dataKlasifikasi as $klasifikasi)
+                        <option value="{{$klasifikasi->id_klasifikasi}}"
+                            @if ($dataBuku->id_klasifikasi == $klasifikasi->id_klasifikasi)
+                                {{"selected"}}
+                            @endif
+                            >{{$klasifikasi->nama_klasifikasi}}</option>
                     @endforeach
                 </select>
             </div>
 
             <div class="form-group">
-                <input type="text" name="jumlah" class="form-control" placeholder="Jumlah" required>
+                <input type="text" name="jumlah" value="{{$dataBuku->jumlah}}" class="form-control" placeholder="Jumlah" required>
             </div>
 
             <div class="form-group" style="float:right">

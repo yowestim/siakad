@@ -12,6 +12,7 @@
         <table id="example2" class="table table-bordered table-hover">
             <thead>
                 <tr>
+                    <th class="th-md">ID Buku</th>
                     <th class="th-md">Judul Buku</th>
                     <th class="th-md">Isbn</th>
                     <th class="th-md">Pengarang</th>
@@ -23,19 +24,23 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <a href="" class="btn btn-warning">Edit</a>
-                        <a href="" class="btn btn-danger">Hapus</a>
-                    </td>
-                </tr>
+                @foreach ($dataBuku as $data)
+                    <tr>
+                        <td>{{$data->id_buku}}</td>
+                        <td>{{$data->judul_buku}}</td>
+                        <td>{{$data->isbn}}</td>
+                        <td>{{$data->pengarang}}</td>
+                        <td>{{$data->penerbit}}</td>
+                        <td>{{$data->tanggal_terbit}}</td>
+                        <td>{{$data->nama_klasifikasi}}</td>
+                        <td>{{$data->jumlah}}</td>
+                        <td>
+                            <a href="{{URL('buku/update', $data->id_buku)}}" class="btn btn-warning">Edit</a>
+                            <a href="{{URL('buku/delete', $data->id_buku)}}" class="btn btn-danger">Hapus</a>
+                        </td>
+                    </tr>
+                @endforeach
+
             </tbody>
         </table>
     </div>
