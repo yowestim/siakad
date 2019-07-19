@@ -7,10 +7,7 @@
         <link rel="stylesheet" href="{{URL::asset('css/datatables-select.min.css')}}">
         <link rel="stylesheet" href="{{URL::asset('css/datatables.min.css')}}">
         <link rel="stylesheet" href="{{URL::asset('css/mdb.lite.min.css')}}">
-        <script src="{{URL::asset('js/jquery.min.js')}}"></script>
-        <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
-        <script src="{{URL::asset('js/dataTables.min.js')}}"></script>
-        <script href="{{URL::asset('js/datatables-select.min.js')}}" rel="stylesheet"></script>
+
         <title>CRUD Staff Laravel</title>
     </head>
     <body>
@@ -20,41 +17,52 @@
                     CRUD Data Staff
                 </div>
                 <div class="card-body">
-                    <a href="{{url('staff/tambah')}}" class="btn btn-primary">Input Staff Baru</a>
+                    <a href="{{url('spp/tambah')}}" class="btn btn-primary">Input Staff Baru</a>
                     <br/>
                     <br/>
                     <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th class="th-sm">Nama</th>
-                                <th class="th-sm">Alamat</th>
-                                <th class="th-sm">No. telp</th>
-                                <th class="th-sm">Jenis Kelamin</th>
-                                <th class="th-sm">foto</th>
+                                <th class="th-sm">Id Spp</th>
+                                <th class="th-sm">Bulan</th>
+                                <th class="th-sm">Jumlah Bayar</th>
+                                <th class="th-sm">Status</th>
+                                <th class="th-sm">Id Siswa</th>
                                 <th class="th-sm">OPSI</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($staff as $s)
+                            @foreach($spp as $s)
                             <tr>
-                                <td>{{ $s->nama_staff }}</td>
-                                <td>{{ $s->alamat }}</td>
-                                <td>{{ $s->nomor_telepon }}</td>
-                                <td>{{ $s->jenis_kelamin }}</td>
-                                <td align="center"><img height="100" width="100" src="{{URL::asset('./images/staff/'.$s->foto)}}" alt=""></td>
+                                <td>{{ $s->id_spp }}</td>
+                                <td>{{ $s->bulan }}</td>
+                                <td>{{ $s->jumlah_bayar }}</td>
+                                <td>{{ $s->status }}</td>
+                                <td>{{ $s->nama_siswa}}</td>
                                 <td>
-                                    <a href="{{url('staff/edit').'/'.$s->id_staff}}" class="btn btn-warning">Edit</a>
-                                    <a href="{{url('staff/delete').'/'.$s->id_staff}}" class="btn btn-danger">Hapus</a>
+                                    <a href="{{url('spp/edit').'/'.$s->id_spp}}" class="btn btn-warning">Edit</a>
+                                    <a href="{{url('spp/delete').'/'.$s->id_spp}}" class="btn btn-danger">Hapus</a>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
+
             </div>
         </div>
+<div class="panel-body">
+                    {!! $chart->html() !!}
+                </div>
+                {!! Charts::scripts() !!}
+        {!! $chart->script() !!}
     </body>
+    <script src="{{URL::asset('js/jquery.min.js')}}"></script>
+    <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
+    <script src="{{URL::asset('js/dataTables.min.js')}}"></script>
+    <script href="{{URL::asset('js/datatables-select.min.js')}}" rel="stylesheet"></script>
 </html>
+
 <script>
 $(document).ready(function () {
 $('#dtBasicExample').DataTable();
