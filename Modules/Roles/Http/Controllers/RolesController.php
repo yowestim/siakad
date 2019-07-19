@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\Roles\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Roles;
-use Redirect;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Controller;
+use Modules\Roles\Entities\Roles;
 
 class RolesController extends Controller
 {
     public function index()
     {
         $roles = Roles::all();
-        return view('master.roles.roles', ['roles' => $roles]);
+        return view('roles::index', ['roles' => $roles]);
     }
 
     public function save(Request $request)
