@@ -11,14 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('staff', 'StaffController@index');
-Route::get('staff/tambah', 'StaffController@tambah');
-Route::post('staff/save', 'StaffController@save');
-Route::get('staff/edit/{id}', 'StaffController@edit');
-Route::put('staff/update/{id}', 'StaffController@update');
-Route::get('staff/delete/{id}', 'StaffController@delete');
-
+Route::get('buku', 'BukuController@index');
+Route::get('buku/add', 'BukuController@add');

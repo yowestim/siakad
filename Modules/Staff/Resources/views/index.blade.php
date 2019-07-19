@@ -8,9 +8,9 @@
     </p>
 <div class="box box-header">
     <div class="box-body">
-            <a href="{{url('staff/tambah')}}" class="btn btn-primary">Input Staff Baru</a>
             <div class="box-header">
-              <h3 class="box-title">Data Table With Full Features</h3>
+
+                <a href="{{url('staff/tambah')}}" class="btn btn-primary">Input New Staff</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -31,8 +31,16 @@
                             <td>{{ $s->nama_staff }}</td>
                             <td>{{ $s->alamat }}</td>
                             <td>{{ $s->nomor_telepon }}</td>
-                            <td>{{ $s->jenis_kelamin }}</td>
-                            <td align="center"><img height="100" width="100" src="{{URL::asset('./images/staff/'.$s->foto)}}" alt=""></td>
+                            <td>
+                                @if ($s->jenis_kelamin == 'L')
+                                    Laki - Laki
+                                @elseif ($s->jenis_kelamin == 'P')
+                                    Perempuan
+                                @else
+                                    null
+                                @endif
+                            </td>
+                            <td align="center"><img height="100" width="150" src="{{URL::asset('./images/staff/'.$s->foto)}}" alt=""></td>
                             <td>
                                 <a href="{{url('staff/edit').'/'.$s->id_staff}}" class="btn btn-warning">Edit</a>
                                 <a href="{{url('staff/delete').'/'.$s->id_staff}}" class="btn btn-danger">Hapus</a>
