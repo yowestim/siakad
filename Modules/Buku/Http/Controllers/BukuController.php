@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\Buku\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Buku;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Controller;
+use Modules\Buku\Entities\Buku;
 
 class BukuController extends Controller
 {
     public function index()
     {
-        $dataBuku = Buku::all();
-    	return view('master.buku.buku', ['buku' => $dataBuku]);
+        return view('buku::index');
     }
 
-    public function addBuku()
+    public function add()
     {
-    	return view('master.buku.buku_add');
+        return view('buku::add');
     }
 
     public function save(Request $request)
@@ -28,7 +29,6 @@ class BukuController extends Controller
         $dataBuku->id_klasifikasi = $request->klasifikasi;
         $dataBuku->jumlah = $request->jumlah;
         $dataBuku->save();
-
-        return redirect('/staff');
     }
+
 }
