@@ -13,3 +13,7 @@
 
 Route::get('buku', 'BukuController@index');
 Route::get('buku/add', 'BukuController@add');
+Route::post('buku/save', 'BukuController@save');
+Route::get('buku/update/{id}', 'BukuController@update');
+Route::post('buku/update/save/{id}', 'BukuController@saveUpdate');
+Route::get('buku/delete/{id}', 'BukuController@delete');
