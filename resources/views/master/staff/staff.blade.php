@@ -11,7 +11,7 @@
         <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
         <script src="{{URL::asset('js/dataTables.min.js')}}"></script>
         <script href="{{URL::asset('js/datatables-select.min.js')}}" rel="stylesheet"></script>
-        <title>CRUD Staff Laravel</title>
+        <title>Data Staff</title>
     </head>
     <body>
         <div class="container">
@@ -41,7 +41,7 @@
                                 <td>{{ $s->alamat }}</td>
                                 <td>{{ $s->nomor_telepon }}</td>
                                 <td>{{ $s->jenis_kelamin }}</td>
-                                <td align="center"><img height="100" width="100" src="{{URL::asset('./images/staff/'.$s->foto)}}" alt=""></td>
+                                <td>{{ $s->foto }}</td>
                                 <td>
                                     <a href="{{url('staff/edit').'/'.$s->id_staff}}" class="btn btn-warning">Edit</a>
                                     <a href="{{url('staff/delete').'/'.$s->id_staff}}" class="btn btn-danger">Hapus</a>

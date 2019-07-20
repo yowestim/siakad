@@ -6,7 +6,7 @@
         <h3 class="box-tittle">Add Data Buku</h3>
     </div>
     <div class="box-body">
-        <form method="post" action="{{url('staff/save')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('buku/save')}}" enctype="multipart/form-data">
             {{ csrf_field() }}
 
             <div class="form-group">
@@ -30,10 +30,11 @@
             </div>
 
             <div class="form-group">
-              <select class="form-control" name="klasifikasi" placeholder="Klasifikasi">
-                <option value="L">Laki - Laki</option>
-                <option value="P">Perempuan</option>
-              </select>
+                <select class="form-control" name="klasifikasi" placeholder="Klasifikasi">
+                    @foreach ($dataKlasifikasi as $data)
+                        <option value="{{$data->id_klasifikasi}}">{{$data->nama_klasifikasi}}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
