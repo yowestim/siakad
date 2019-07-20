@@ -18,6 +18,7 @@ class AbsensiStaffController extends Controller
     public function index()
     {
         $staff = DB::table('staff')
+        ->leftjoin('absensi_staff', 'absensi_staff.id_staff' , '=', 'staff.id_staff')
         ->get();
         return view('absensistaff::index', ['staff' => $staff]);
     }

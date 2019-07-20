@@ -24,9 +24,8 @@
                 <tr>
                 <input type="hidden" value="{{$item->id_staff}}">
                 <td>{{$i++}}</td>
-                @if ($item->jenis_kelamin == "P"){
+                @if ($item->jenis_kelamin == "P")
                     <td>{{$item->nama_staff}} ( Perempuan )</td>
-                }
                 @else
                 <td>{{$item->nama_staff}} ( Laki-Laki )</td>
                 @endif
