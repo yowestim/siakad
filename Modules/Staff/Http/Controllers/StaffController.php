@@ -1,22 +1,28 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\Staff\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Staff;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Controller;
+use Modules\Staff\Entities\Staff;
+
 
 class StaffController extends Controller
 {
-    //
+    /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+
     public function index()
     {
     	$staff = Staff::all();
-    	return view('master.staff.staff', ['staff' => $staff]);
+    	return view('staff::index', ['staff' => $staff]);
     }
     public function tambah()
     {
-    	return view('master.staff.staff_tambah');
+    	return view('staff::staff_tambah');
     }
 
     public function save(Request $request)
@@ -40,7 +46,7 @@ class StaffController extends Controller
     public function edit($id)
     {
     $staff = Staff::find($id);
-    return view('master.staff.staff_edit', ['staff' => $staff]);
+    return view('staff::staff_edit', ['staff' => $staff]);
     }
 
     public function update($id, Request $request)
