@@ -2,19 +2,24 @@
 
 @section('content')
     <h1>Input Absensi Murid</h1>
-    <a type="button" href="/absensiswa/show" class="btn btn-primary">Lihat Absensi</a>
+    <div class="box box-header">
+        <div class="box-body">
+                <div class="box-header">
     
+                    <a type="button" href="/absensiswa/show" class="btn btn-primary">Lihat Absensi</a>
+                </div>
     <form action="/absensiswa/store/" method="POST">
         {{ csrf_field() }}
+        <div class="box-body">
         <table id="example" class="table table-stripped table-bordered">
             <thead>
-                <tr class="table100-head">
-                    <th class="column1">No</th>
-                    <th class="column2">Nama Murid</th>
-                    <th class="column3">Alamat</th>
-                    <th class="column4">Kelas</th>
-                    <th class="column5">Hari Ke</th>
-                    <th class="column6">Absensi</th>
+                <tr>
+                    <th class="th-sm">No</th>
+                    <th class="th-sm">Nama Murid</th>
+                    <th class="th-sm">Alamat</th>
+                    <th class="th-sm">Kelas</th>
+                    <th class="th-sm">Hari Ke</th>
+                    <th class="th-sm">Absensi</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,8 +47,9 @@
             
             </tr>
             @endforeach
-        </tbody>
+        </tfoot>
     </table>
+    </div>
     <button type="submit" class="btn btn-success" style="float:right">
         <span class="glyphicon glyphicon-send"> Input</span>
     </button>
