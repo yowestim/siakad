@@ -1,0 +1,14 @@
+{
+    "name": "Nilai",
+    "alias": "nilai",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Nilai\\Providers\\NilaiServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
