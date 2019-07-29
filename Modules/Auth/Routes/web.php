@@ -11,9 +11,22 @@
 |
 */
 //--------------------------------Login,Logout dan Register-----------------------------------//
-Route::get('/login/loginPost','AuthController@loginPost');
-Route::get('/logout','AuthController@logout');
-Route::get('/login','AuthController@login');
+//staff
+Route::get('/login/loginPoststaff','AuthController@loginPoststaff');
+Route::get('/loginstaff','AuthController@loginstaff');
+//guru
+Route::get('/login/loginPostguru','AuthController@loginPostguru');
+Route::get('/loginguru','AuthController@loginnguru');
+//siswa
+Route::get('/login/loginPostsiswa','AuthController@loginPostsiswa');
+Route::get('/loginsiswa','AuthController@loginsiswa');
+
+//staff
+Route::get('/logoutstaff','AuthController@logoutstaff');
+//guru
+Route::get('/logoutguru','AuthController@logoutguru');
+//siswa
+Route::get('/logoutsiswa','AuthController@logoutsiswa');
 
 Route::get('/registrasi','AuthController@registrasi');
 Route::post('/registrasi/post','AuthController@registrasiPost');

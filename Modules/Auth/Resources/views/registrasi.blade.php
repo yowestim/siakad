@@ -20,8 +20,9 @@
                     <div class="select-list">
                         <h3>Roles</h3>
                         <select onchange="tampil()" name="roles" id="roles">
-                            @foreach ($data as $item)                                
-                                <option  name="id_roles" value="{{$item->id_roles}}">{{$item->nama_roles}}</option>
+                            <option selected value="" disabled>Pilih Roles . . .</option>                          
+                            @foreach ($data as $item)      
+                                <option name="id_roles" value="{{$item->id_roles}}">{{$item->nama_roles}}</option>
                             @endforeach
                         </select>
                     </div>

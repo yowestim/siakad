@@ -42,23 +42,31 @@
                                 </p>
                             </div>
 							<form class="form-auth-small" id="form-login" method="get">
-							{{ csrf_field() }}
-								<div class="form-group">
-									<label for="signin-email" class="control-label sr-only">Username</label>
-									<input type="text" id="username" class="form-control" name="username" placeholder="Username">
+                            {{ csrf_field() }}
+                            {{-- <input type="hidden" name="roles" value="4"> --}}
+									<div class="form-group">
+										<label for="signin-email" class="control-label sr-only">Username</label>
+										<input type="text" id="username" class="form-control" name="username" placeholder="Username">
+									</div>
+									<div class="form-group">
+										<label for="signin-password" class="control-label sr-only">Password</label>
+										<input type="password" id="password" class="form-control" name="password" placeholder="Password">
+									</div>
+									<div class="form-group">
+									<h5>Dont have an account? <a href="{{url('registrasi')}}">Daftar</a></h5>
 								</div>
-								<div class="form-group">
-									<label for="signin-password" class="control-label sr-only">Password</label>
-									<input type="password" id="password" class="form-control" name="password" placeholder="Password">
-                                </div>
 								<button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
-							</form>
+							</form><br>
+							<div class="row">
+								<a href="{{url('loginstaff')}}" class="btn btn-info btn-lg">Login Staff</a>
+								<a href="{{url('loginsiswa')}}" class="btn btn-warning btn-lg">Login Siswa</a>
+							</div>
 						</div>
 					</div>
 					<div class="right">
 						<div class="overlay"></div>
 						<div class="content text">
-							<h1 class="heading">Login Admin</h1>
+							<h1 class="heading">Login Guru</h1>
 						</div>
 					</div>
 					<div class="clearfix"></div>
@@ -66,7 +74,7 @@
 			</div>
 		</div>
 	</div>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script>
      $("#form-login").on('submit', function(e){
         e.preventDefault()
@@ -76,10 +84,10 @@
            alert("Username harus di isi!!!");
         } else if (password == "") {
 			alert("Password harus di isi!!!");
-        } else {
+        } else{
             $.ajax({
                 type: "get",
-                url: "{{url('/login/loginPost')}}",
+                url: "{{url('/login/loginPostguru')}}",
                 data: {
                     _token: "{{csrf_token()}}",
                     username: username,
@@ -89,13 +97,7 @@
 					// console.log(data);
 					if(data == 1){
 						alert("Berhasil Masuk")
-						window.location.replace("{{url('staff/index')}}");
-                    }else if(data == 2){
-                        alert("Berhasil Masuk")
-						window.location.replace("{{url('guru/index')}}");						
-                    }else if(data == 3){
-                        alert("Berhasil Masuk")
-						window.location.replace("{{url('siswa/index')}}");
+						window.location.replace("{{url('guru/index')}}");
                     }else{
                     	alert("Username atau Password tidak terdaftar");
                  	 }
@@ -104,7 +106,6 @@
         }
     })
 </script>
-	<!-- END WRAPPER -->
 </body>
 
 </html>
