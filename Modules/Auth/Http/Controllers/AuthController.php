@@ -43,6 +43,7 @@ class AuthController extends Controller
                 Session::put('username',$data->username);
                 Session::put('id_user',$data->id_user);
                 Session::put('id_roles',$data->id_roles);
+                Session::put('nama_staff',$data->nama_staff);
                 Session::put('login',true);
                 echo 1;
             }else{
@@ -64,8 +65,9 @@ class AuthController extends Controller
             if($data){
             if(Hash::check($password,$data->password)){
                 Session::put('username',$data->username);
-                Session::put('id_user',$data->id_user);
+                Session::put('id_guru',$data->id_guru);
                 Session::put('id_roles',$data->id_roles);
+                Session::put('nama_guru',$data->nama_guru);
                 Session::put('login',true);
                 echo 1;
             }else{
@@ -89,6 +91,7 @@ class AuthController extends Controller
                 Session::put('username',$data->username);
                 Session::put('id_user',$data->id_user);
                 Session::put('id_roles',$data->id_roles);
+                Session::put('nama_siswa',$data->nama_siswa);
                 Session::put('login',true);
                 echo 1;
             }else{
@@ -164,7 +167,8 @@ class AuthController extends Controller
     {
         print_r(Session::get('login'));
         if (Session::get('login')) {
-            return view('auth::admin.index');
+            $data =  Session::get('nama_staff');
+            return view('auth::admin.index',compact('data'));
         }else{
             Alert::error('You must login first!','Warning')->autoclose(2000);
             return redirect('loginstaff');
@@ -174,7 +178,8 @@ class AuthController extends Controller
     {
         print_r(Session::get('login'));
         if (Session::get('login')) {
-            return view('auth::guru.index');
+            $data = Session::get('nama_guru');
+            return view('auth::guru.index',compact('data'));
         }else{
             Alert::error('You must login first!','Warning')->autoclose(2000);
             return redirect('loginguru');
@@ -184,7 +189,8 @@ class AuthController extends Controller
     {
         print_r(Session::get('login'));
         if (Session::get('login')) {
-            return view('auth::siswa.index');
+            $data = Session::get('nama_siswa');
+            return view('auth::siswa.index',compact('data'));
         }else{
             Alert::error('You must login first!','Warning')->autoclose(2000);
             return redirect('loginsiswa');

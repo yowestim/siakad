@@ -57,7 +57,7 @@
 								<button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
 							</form><br>
 							<div class="row">
-								<a href="{{url('loginnguru')}}" class="btn btn-info btn-lg">Login Guru</a>
+								<a href="{{url('loginguru')}}" class="btn btn-info btn-lg">Login Guru</a>
 								<a href="{{url('loginsiswa')}}" class="btn btn-warning btn-lg">Login Siswa</a>
 							</div>
 						</div>
