@@ -5,16 +5,16 @@
 @section('logout')
 <li class="dropdown user user-menu">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-          <span class="hidden-xs">Alexander Pierce</span>
+          <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="user-image" alt="User Image">
+          <span class="hidden-xs">{{$data}}</span>
         </a>
         <ul class="dropdown-menu">
           <!-- User image -->
           <li class="user-header">
-            <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+            <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
 
             <p>
-              Alexander Pierce - Web Developer
+              {{$data}}
               <small>Member since Nov. 2012</small>
             </p>
           </li>
@@ -44,4 +44,7 @@
           </li>
         </ul>
       </li>
+@endsection
+@section('name')
+    {{$data}}
 @endsection

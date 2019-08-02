@@ -4,8 +4,8 @@
   @include('partials.head')
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
-
+<div id="wrapper">
+    <nav class="navbar navbar-default navbar-fixed-top">
   <header class="main-header">
     @include('partials.header')
   </header>
@@ -25,6 +25,7 @@
     <!-- /.content -->
   </div>
   @include('partials.footer')
+    </nav>
 </div>
 <!-- ./wrapper -->
   @include('partials.script')
