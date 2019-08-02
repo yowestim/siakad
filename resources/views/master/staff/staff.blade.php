@@ -11,7 +11,7 @@
         <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
         <script src="{{URL::asset('js/dataTables.min.js')}}"></script>
         <script href="{{URL::asset('js/datatables-select.min.js')}}" rel="stylesheet"></script>
-        <title>Tutorial Laravel #21 : CRUD Eloquent Laravel</title>
+        <title>Data Staff</title>
     </head>
     <body>
         <div class="container">

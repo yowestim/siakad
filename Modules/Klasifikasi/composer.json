@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/klasifikasi",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Klasifikasi\\Providers\\KlasifikasiServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Klasifikasi\\": ""
+        }
+    }
+}
