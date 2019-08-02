@@ -7,7 +7,10 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Staff\Entities\Staff;
 use DB;
+use PDF;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SppExport;
 
 class StaffController extends Controller
 {
@@ -126,4 +129,20 @@ class StaffController extends Controller
         $pegawai->delete();
         return redirect('/staff');
     }
+
+    public function cetak_pdf()
+    {
+        $spp = DB::table('spp')
+            ->join('siswa', 'siswa.id_siswa','spp.id_siswa')
+            ->select('spp.*','siswa.nama_siswa')
+            ->get();
+
+    	$pdf = PDF::loadview('staff::spp_pdf',['spp'=>$spp]);
+    	return $pdf->download('laporan-spp-pdf.pdf');
+    }
+
+    public function cetak_excel()
+	{
+		return Excel::download(new SppExport, 'Laporan-Spp-Excel.xlsx');
+	}
 }

@@ -9,8 +9,9 @@
 <div class="box box-header">
     <div class="box-body">
             <div class="box-header">
-
                 <a href="{{url('staff/tambah')}}" class="btn btn-primary">Input New Staff</a>
+                <a style="float:right;margin-left:1%;" href="{{url('spp/cetak_pdf')}}"  class="btn btn-info" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>  CETAK PDF</a>
+                <a style="float:right;" href="{{url('spp/cetak_excel')}}"  class="btn btn-success" target="_blank"><i class="fa fa-file-excel-o" aria-hidden="true"></i>  CETAK EXCEl</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -112,40 +113,13 @@
 </div>
 @stop
 @section('script')
-<script type="text/javascript" src="https://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tableTools.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/tabletools/2.2.2/swf/copy_csv_xls_pdf.swf"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.flash.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
-
+        {{-- <script src="{{URL::asset('js/dataTables.min.js')}}"></script> --}}
         <script>
             $(document).ready(function () {
             $('#dtBasicExample').DataTable();
             $('.dataTables_length').addClass('bs-select');
-            $('#example1').DataTable( {
+            $('#example1').DataTable()
 
-                 "sPaginationType": "full_numbers",
-                 "aaSorting": [[ 0, "asc" ]],
-                 "iDisplayLength": 5,
-                 "oLanguage": {
-                 "sLengthMenu": 'Show <select>'+
-                                '<option value="5">5</option>'+
-                                '<option value="10">10</option>'+
-                                '<option value="25">25</option>'+
-                                '<option value="50">50</option>'+
-                                '<option value="100">100</option>'+
-                                '<option value="-1">All</option>'+
-                                '</select> entries'
-                  },
-                  "pageLength": 50,
-                "dom": 'Bfrtip',
-                "buttons": ['copy','csv','excel','pdf','print'],
-             } );
             });
 
             $(function () {

@@ -17,3 +17,5 @@ Route::post('staff/save', 'StaffController@save');
 Route::get('staff/edit/{id}', 'StaffController@edit');
 Route::put('staff/update/{id}', 'StaffController@update');
 Route::get('staff/delete/{id}', 'StaffController@delete');
+Route::get('spp/cetak_pdf', 'StaffController@cetak_pdf');
+Route::get('spp/cetak_excel', 'StaffController@cetak_excel');
