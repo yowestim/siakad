@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Staff\Entities\Staff;
+use DB;
+use PDF;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SppExport;
 
 class StaffController extends Controller
 {
@@ -17,8 +21,9 @@ class StaffController extends Controller
 
     public function index()
     {
-    	$staff = Staff::all();
-    	return view('staff::index', ['staff' => $staff]);
+        $staff = Staff::all();
+        return view('staff::index', ['staff' => $staff,]);
+
     }
     public function tambah()
     {
@@ -80,4 +85,5 @@ class StaffController extends Controller
         $pegawai->delete();
         return redirect('/staff');
     }
+
 }

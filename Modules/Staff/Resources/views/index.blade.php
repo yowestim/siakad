@@ -9,8 +9,9 @@
 <div class="box box-header">
     <div class="box-body">
             <div class="box-header">
-
                 <a href="{{url('staff/tambah')}}" class="btn btn-primary">Input New Staff</a>
+                <a style="float:right;margin-left:1%;" href="{{url('spp/cetak_pdf')}}"  class="btn btn-info" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>  CETAK PDF</a>
+                <a style="float:right;" href="{{url('spp/cetak_excel')}}"  class="btn btn-success" target="_blank"><i class="fa fa-file-excel-o" aria-hidden="true"></i>  CETAK EXCEl</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -50,6 +51,13 @@
                 </tfoot>
               </table>
             </div>
+
+  </div>
+
+
+        </div>
+
+
             <!-- /.box-body -->
     </div>
 </div>
@@ -60,10 +68,12 @@
             $(document).ready(function () {
             $('#dtBasicExample').DataTable();
             $('.dataTables_length').addClass('bs-select');
+            $('#example1').DataTable()
+
             });
 
             $(function () {
-            $('#example1').DataTable()
+
             $('#example2').DataTable({
             'paging'      : true,
             'lengthChange': false,
@@ -73,5 +83,6 @@
             'autoWidth'   : false
             })
         })
+
             </script>
 @endsection

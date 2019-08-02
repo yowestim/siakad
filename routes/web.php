@@ -13,4 +13,9 @@
 
 Route::get('/', function () {
     return view('welcome');
+<<<<<<< HEAD
 });
+=======
+});
+
+>>>>>>> annasprastyo

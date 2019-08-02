@@ -6,6 +6,7 @@
 <script>
   $.widget.bridge('uibutton', $.ui.button);
 </script>
+{{-- <script src="{{asset('js/pdfmake.min.js')}}"></script> --}}
 <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -13,6 +14,7 @@
 <!-- Morris.js charts -->
 <script src="{{asset('bower_components/raphael/raphael.min.js')}}"></script>
 <script src="{{asset('bower_components/morris.js/morris.min.js')}}"></script>
+<script src="{{asset('bower_components/chart.js/Chart.js')}}"></script>
 <!-- Sparkline -->
 <script src="{{asset('bower_components/jquery-sparkline/dist/jquery.sparkline.min.js')}}"></script>
 <!-- jvectormap -->
