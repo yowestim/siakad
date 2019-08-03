@@ -85,9 +85,9 @@ rel="stylesheet">
     color: #fff;
 }
 </style>
-    <input value="{{$muasuk = round($gils->masuk / ($gils->masuk + $gils->sakit + $gils->ijin + $gils->alfa) * 100)}}" hidden>
     <h3>Selamat Datang {{$gils->nama_staff}}</h3><br>
     @if(($gils->masuk + $gils->sakit + $gils->ijin + $gils->alfa) != 0)
+    <input value="{{$muasuk = round($gils->masuk / ($gils->masuk + $gils->sakit + $gils->ijin + $gils->alfa) * 100)}}" hidden>
     <div class="row">
     @if($muasuk >= 90 && $muasuk <= 100)
       <div class="col-lg-6 col-md-6 col-sm-6">

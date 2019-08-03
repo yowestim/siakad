@@ -1,0 +1,14 @@
+{
+    "name": "TransaksiPeminjamanBuku",
+    "alias": "transaksipeminjamanbuku",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\TransaksiPeminjamanBuku\\Providers\\TransaksiPeminjamanBukuServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
