@@ -43,7 +43,7 @@ class AuthController extends Controller
                 Session::put('username',$data->username);
                 Session::put('id_user',$data->id_user);
                 Session::put('id_roles',$data->id_roles);
-                Session::put('nama_staff',$data->nama_staff);
+                Session::put('id_staff',$data->id_staff);
                 Session::put('login',true);
                 echo 1;
             }else{
@@ -167,8 +167,13 @@ class AuthController extends Controller
     {
         print_r(Session::get('login'));
         if (Session::get('login')) {
-            $data =  Session::get('nama_staff');
-            return view('auth::admin.index',compact('data'));
+            $data =  Session::get('id_staff');
+            $gils = DB::table('staff')
+            ->leftjoin('absensi_staff', 'absensi_staff.id_staff', '=', 'staff.id_staff')
+            ->select('staff.*', 'absensi_staff.masuk', 'absensi_staff.sakit', 'absensi_staff.ijin', 'absensi_staff.alfa')
+            ->where('staff.id_staff' , $data)
+            ->first();
+            return view('auth::admin.index', compact('gils', 'data'));
         }else{
             Alert::error('You must login first!','Warning')->autoclose(2000);
             return redirect('loginstaff');

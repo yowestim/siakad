@@ -19,6 +19,7 @@ class AbsensiStaffController extends Controller
     {
         $staff = DB::table('staff')
         ->leftjoin('absensi_staff', 'absensi_staff.id_staff' , '=', 'staff.id_staff')
+        ->select('staff.*', 'absensi_staff.masuk', 'absensi_staff.sakit', 'absensi_staff.ijin', 'absensi_staff.alfa')
         ->get();
         return view('absensistaff::index', ['staff' => $staff]);
     }
