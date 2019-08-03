@@ -8,7 +8,8 @@ use Illuminate\Routing\Controller;
 use Modules\Buku\Entities\Buku;
 
 class BukuController extends Controller
-{
+{    
+    
     public function index()
     {
         return view('buku::index');
