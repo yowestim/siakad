@@ -68,19 +68,112 @@ rel="stylesheet">
     background-color: #4CAF50 !important;
     color: #fff;
 }
+.bg-yellow {
+    background-color: #FFBB00 !important;
+    color: #fff;
+}
 .bg-orange {
-    background-color: #FF9800 !important;
+    background-color: #FF7700 !important;
     color: #fff;
 }
 .bg-blue {
     background-color: #2196F3 !important;
     color: #fff;
 }
+.bg-purple {
+    background-color: #9C27B0 !important;
+    color: #fff;
+}
 </style>
-    <h3>Selamat Datang {{$gils->nama_staff}}</h3>
-    <h5>Anda Absen Selama {{$gils->masuk + $gils->sakit + $gils->ijin + $gils->alfa}} Hari</h5>
+    <input value="{{$muasuk = round($gils->masuk / ($gils->masuk + $gils->sakit + $gils->ijin + $gils->alfa) * 100)}}" hidden>
+    <h3>Selamat Datang {{$gils->nama_staff}}</h3><br>
     @if(($gils->masuk + $gils->sakit + $gils->ijin + $gils->alfa) != 0)
     <div class="row">
+    @if($muasuk >= 90 && $muasuk <= 100)
+      <div class="col-lg-6 col-md-6 col-sm-6">
+      <div class="infox bg-green">
+        <div class="icon">
+            <i><span class="fa fa-user"></span></i>
+        </div>
+        <div class="content">
+          <div class="text" style="color:#fff">NILAI PRESENSI</div>
+              <div class="num" style="color:#fff">
+                BAIK SEKALI
+              </div>
+          </div>
+      </div>
+    </div>
+    @elseif($muasuk >= 80 && $muasuk < 90)
+    <div class="col-lg-6 col-md-6 col-sm-6">
+      <div class="infox bg-blue">
+        <div class="icon">
+            <i><span class="fa fa-user"></span></i>
+        </div>
+        <div class="content">
+          <div class="text" style="color:#fff">NILAI PRESENSI</div>
+              <div class="num" style="color:#fff">
+                BAIK
+              </div>
+          </div>
+      </div>
+    </div>
+    @elseif($muasuk >= 60 && $muasuk < 80)
+    <div class="col-lg-6 col-md-6 col-sm-6">
+      <div class="infox bg-yellow">
+        <div class="icon">
+            <i><span class="fa fa-user"></span></i>
+        </div>
+        <div class="content">
+          <div class="text" style="color:#fff">NILAI PRESENSI</div>
+              <div class="num" style="color:#fff">
+                CUKUP
+              </div>
+          </div>
+      </div>
+    </div>
+    @elseif($muasuk >= 40 && $muasuk < 60)
+    <div class="col-lg-6 col-md-6 col-sm-6">
+      <div class="infox bg-orange">
+        <div class="icon">
+            <i><span class="fa fa-user"></span></i>
+        </div>
+        <div class="content">
+          <div class="text" style="color:#fff">NILAI PRESENSI</div>
+              <div class="num" style="color:#fff">
+                BURUK
+              </div>
+          </div>
+      </div>
+    </div>
+    @elseif($muasuk >= 0 && $muasuk < 40)
+    <div class="col-lg-6 col-md-6 col-sm-6">
+      <div class="infox bg-red">
+        <div class="icon">
+            <i><span class="fa fa-user"></span></i>
+        </div>
+        <div class="content">
+          <div class="text" style="color:#fff">NILAI PRESENSI</div>
+              <div class="num" style="color:#fff">
+                BURUK SEKALI
+              </div>
+          </div>
+      </div>
+    </div>
+    @endif
+    <div class="col-lg-6 col-md-6 col-sm-6">
+      <div class="infox bg-purple">
+        <div class="icon">
+            <i><span class="fa fa-user"></span></i>
+        </div>
+        <div class="content">
+          <div class="text" style="color:#fff">KEHADIRAN</div>
+              <div class="num" style="color:#fff">
+                {{$muasuk}}
+                <small>%</small>
+              </div>
+          </div>
+      </div>
+    </div>
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
         <div class="infox">
           <div class="icon bg-green">
