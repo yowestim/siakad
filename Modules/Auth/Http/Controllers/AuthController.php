@@ -215,7 +215,7 @@ class AuthController extends Controller
             ->get();
             $soden = DB::table('siswa')
             ->leftjoin('transaksi_pinjaman' , 'transaksi_pinjaman.id_siswa' , '=', 'siswa.id_siswa')
-            ->select('siswa.*', 'transaksi_pinjaman.denda')
+            ->select('siswa.*','transaksi_pinjaman.id_transaksi_pinjaman', 'transaksi_pinjaman.denda')
             ->where('siswa.id_siswa', $data)    
             ->first();
             return view('auth::siswa.tpb',compact('data', 'gatel', 'soden'));

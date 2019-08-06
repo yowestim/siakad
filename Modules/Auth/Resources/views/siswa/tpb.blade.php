@@ -4,6 +4,10 @@
 <h3>Selamat Datang {{$soden->nama_siswa}}!! Anda Telah Masuk Halaman Peminjaman Buku</h3>
 <a href="{{url('siswa/index')}}" class="btn btn-primary">Dashboard</a>
 <a href="{{url('siswa/riwayattpb')}}" class="btn btn-success">Daftar Riwayat Peminjaman</a>
+@if ($soden->id_transaksi_pinjaman != null)
+<h3 style="color:red">SETIAP SISWA HANYA BOLEH MEMINJAM MAKSIMAL 1 BUKU</h3>      
+@else
+    
 @if ($soden->denda == 0)
 <div class="box box-header">
     <div class="box-body">
@@ -57,6 +61,8 @@
 </marquee>
 @else
   <h3 style="color:red">TOLONG BAYAR DENDA DAHULU SEBELUM PINJAM BUKU</h3>    
+@endif
+
 @endif
 
     <div class="modal fade" id="modal-tpb-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
