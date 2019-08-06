@@ -17,3 +17,5 @@ Route::get('/adminspp','SppController@admin');
 Route::get('/adminspp/search','SppController@search');
 Route::get('/adminspp/edit{id}','SppController@edit');
 Route::post('/adminspp/save','SppController@saveAdmin');
+Route::get('spp/cetak_pdf', 'SppController@cetak_pdf');
+Route::get('spp/cetak_excel', 'SppController@cetak_excel');
