@@ -10,6 +10,7 @@ use Modules\Auth\Entities\Role;
 use Modules\Auth\Entities\Guru;
 use Modules\Auth\Entities\Siswa;
 use Modules\Auth\Entities\Staff;
+use Modules\Buku\Entities\Buku;
 use Redirect;
 use Session;
 use Alert;
@@ -91,7 +92,7 @@ class AuthController extends Controller
                 Session::put('username',$data->username);
                 Session::put('id_user',$data->id_user);
                 Session::put('id_roles',$data->id_roles);
-                Session::put('nama_siswa',$data->nama_siswa);
+                Session::put('id_siswa',$data->id_siswa);
                 Session::put('login',true);
                 echo 1;
             }else{
@@ -194,8 +195,52 @@ class AuthController extends Controller
     {
         print_r(Session::get('login'));
         if (Session::get('login')) {
-            $data = Session::get('nama_siswa');
-            return view('auth::siswa.index',compact('data'));
+            $data = Session::get('id_siswa');
+            $soden = DB::table('siswa')
+            ->where('siswa.id_siswa', $data)    
+            ->first();
+            return view('auth::siswa.index',compact('data', 'soden'));
+        }else{
+            Alert::error('You must login first!','Warning')->autoclose(2000);
+            return redirect('loginsiswa');
+        }
+    }
+    public function siswaTpb()
+    {
+        print_r(Session::get('login'));
+        if (Session::get('login')) {
+            $data = Session::get('id_siswa');
+            $gatel = DB::table('buku')
+            ->join('klasifikasi', 'klasifikasi.id_klasifikasi', '=', 'buku.id_klasifikasi')
+            ->get();
+            $soden = DB::table('siswa')
+            ->leftjoin('transaksi_pinjaman' , 'transaksi_pinjaman.id_siswa' , '=', 'siswa.id_siswa')
+            ->select('siswa.*', 'transaksi_pinjaman.denda')
+            ->where('siswa.id_siswa', $data)    
+            ->first();
+            return view('auth::siswa.tpb',compact('data', 'gatel', 'soden'));
+        }else{
+            Alert::error('You must login first!','Warning')->autoclose(2000);
+            return redirect('loginsiswa');
+        }
+    }
+    public function siswaRiwayatTpb()
+    {
+        print_r(Session::get('login'));
+        if (Session::get('login')) {
+            $data = Session::get('id_siswa');
+            $gatel = DB::table('buku')
+            ->join('klasifikasi', 'klasifikasi.id_klasifikasi', '=', 'buku.id_klasifikasi')
+            ->get();
+            $soden = DB::table('siswa')
+            ->where('siswa.id_siswa', $data)    
+            ->first();
+            $riwayat = DB::table('transaksi_pinjaman')
+            ->join('buku', 'buku.id_buku', '=', 'transaksi_pinjaman.id_buku')
+            ->join('siswa', 'siswa.id_siswa' , '=', 'transaksi_pinjaman.id_siswa')
+            ->where('transaksi_pinjaman.id_siswa', $data)
+            ->get();
+            return view('auth::siswa.riwayattpb',compact('data', 'gatel', 'soden', 'riwayat'));
         }else{
             Alert::error('You must login first!','Warning')->autoclose(2000);
             return redirect('loginsiswa');
@@ -218,5 +263,29 @@ class AuthController extends Controller
         Session::flush();
         Redirect::back();
         return redirect('loginsiswa')->with('alert','Kamu sudah Logout!');
+    }
+    public function siswaPinjam(Request $request, $id){
+        print_r(Session::get('login'));
+        if (Session::get('login')) {
+            $data = Session::get('id_siswa');
+            $buku = Buku::find($id);
+            $buku->jumlah = $buku->jumlah - 1;
+            $buku->save();
+            $pinjam = DB::table('transaksi_pinjaman')
+            ->insert([
+                'id_buku' => $id,
+                'id_siswa' => $data,
+                'tanggal_pinjam' => $request->tanggal_pinjam,
+                'tanggal_dikembalikan' => $request->tanggal_dikembalikan,
+                'status' => 'P',
+                'denda' => 0
+            ]);
+            Alert::success('Sukses','Warning')->autoclose(2000);            
+            return redirect('siswa/tpb');
+        }else{
+            Alert::error('You must login first!','Warning')->autoclose(2000);
+            return redirect('loginsiswa');
+        }
+        
     }
 }

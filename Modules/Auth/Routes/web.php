@@ -35,4 +35,7 @@ Route::post('/registrasi/post','AuthController@registrasiPost');
 Route::get('guru/index','AuthController@guruIndex');
 Route::get('staff/index','AuthController@staffIndex');
 Route::get('siswa/index','AuthController@siswaIndex');
+Route::get('siswa/tpb','AuthController@siswaTpb');
+Route::post('siswa/pinjam/{id}','AuthController@siswaPinjam');
+Route::get('siswa/riwayattpb','AuthController@siswaRiwayatTpb');
 

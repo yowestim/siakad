@@ -8,4 +8,5 @@ class TransaksiPeminjamanBuku extends Model
 {
     protected $table = 'transaksi_pinjaman';
     protected $primaryKey = 'id_transaksi_pinjaman';
+    public $timestamps = false;
 }

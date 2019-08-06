@@ -15,4 +15,7 @@
 //     Route::get('/', 'TransaksiPeminjamanBukuController@index');
 // });
 
-Route::get('/transaksi-peminjaman-buku' , 'TransaksiPeminjamanBukuController@index');
+Route::get('/tpb' , 'TransaksiPeminjamanBukuController@index');
+Route::get('/tpb/kembali/{id}' , 'TransaksiPeminjamanBukuController@kembali');
+Route::get('/tpb/bayarDenda/{id}' , 'TransaksiPeminjamanBukuController@bayarDenda');
+Route::get('/tpb/delete/{id}' , 'TransaksiPeminjamanBukuController@delete');

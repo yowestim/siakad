@@ -1,6 +1,7 @@
 @extends('apps.layout')
 @section('content')
-    <h3>Anda Siswa!</h3>
+<h3>Selamat Datang {{$soden->nama_siswa}}</h3>
+<a href="{{url('siswa/tpb')}}" class="btn btn-primary">Pinjam Buku</a>
 @endsection
 @section('logout')
 <li class="dropdown user user-menu">
