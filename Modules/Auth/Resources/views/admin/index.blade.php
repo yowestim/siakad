@@ -84,9 +84,10 @@ rel="stylesheet">
     background-color: #9C27B0 !important;
     color: #fff;
 }
-</style> 
-    <h3>Selamat Datang {{$gils->nama_staff}}</h3><br>
-    @if(($gils->masuk + $gils->sakit + $gils->ijin + $gils->alfa) != 0)
+</style>
+  
+    <h3>Selamat Datang {{$nama->nama_staff}}</h3><br>
+    @if($gils !=null)
     <input value="{{$muasuk = round($gils->masuk / ($gils->masuk + $gils->sakit + $gils->ijin + $gils->alfa) * 100)}}" hidden>
     <div class="row">
     @if($muasuk >= 90 && $muasuk <= 100)
@@ -235,7 +236,7 @@ rel="stylesheet">
 <li class="dropdown user user-menu">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="user-image" alt="User Image">
-          <span class="hidden-xs">{{$gils->nama_staff}}</span>
+          <span class="hidden-xs">{{$nama->nama_staff}}</span>
         </a>
         <ul class="dropdown-menu">
           <!-- User image -->
@@ -243,7 +244,7 @@ rel="stylesheet">
             <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
 
             <p>
-              {{$gils->nama_staff}}
+              {{$nama->nama_staff}}
               <small>Member since Nov. 2012</small>
             </p>
           </li>
@@ -275,5 +276,5 @@ rel="stylesheet">
       </li>
 @endsection
 @section('name')
-    {{$gils->nama_staff}}
+    {{$nama->nama_staff}}
 @endsection

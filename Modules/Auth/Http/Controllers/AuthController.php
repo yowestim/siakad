@@ -174,6 +174,9 @@ class AuthController extends Controller
             // ->select('staff.*', 'absensi_staff.masuk', 'absensi_staff.sakit', 'absensi_staff.ijin', 'absensi_staff.alfa')
             // ->where('staff.id_staff' , $data)
             // ->first();
+            $nama = DB::table('staff')
+            ->where('id_staff', $data)
+            ->first();
             $gils = DB::table('absensi_staff')
             ->join('staff', 'absensi_staff.id_staff', '=', 'staff.id_staff')
             ->select(DB::raw('SUM(absensi_staff.masuk) AS masuk,
@@ -184,8 +187,7 @@ class AuthController extends Controller
             ->groupBy('id_staff')
             ->where('absensi_staff.id_staff', $data)
             ->first();
-            // dd($gils);
-            return view('auth::admin.index', compact('gils', 'data'));
+            return view('auth::admin.index', compact('gils', 'data', 'nama'));
         }else{
             Alert::error('You must login first!','Warning')->autoclose(2000);
             return redirect('loginstaff');
