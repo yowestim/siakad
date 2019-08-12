@@ -30,12 +30,29 @@
                                 <td>{{ $s->tanggal_pinjam }}</td>
                                 <td>{{ $s->tanggal_dikembalikan }}</td>
                                 @if ($s->status == "P")
-                                <td>Pinjam</td>
-                                @elseif ($s->status == "K")
-                                <td>Dikembalikan</td>
-                                @endif
-                                <td>Rp. {{number_format($s->denda, 0 , ',' , '.')}}</td>
-                                
+                                    <td>Pinjam</td>
+                                    {{-- <td>Rp.{{ number_format($s->denda, 0 , ',', '.') }}</td> --}}
+                                    <td>
+                                        @php
+                                                $date1=new DateTime(date('Y-m-d', strtotime($s->tanggal_dikembalikan)));
+                                                $date2=new DateTime(date('Y-m-d', strtotime(date("Y-m-d"))));
+                                        @endphp
+                                        @if($date1 < $date2) 
+                                                @php
+                                                        $diff = $date1->diff($date2)->days;   
+                                                        $denda = $diff*10000; 
+                                                @endphp
+                                        <input name="denda" value="{{$s->denda + ($diff*10000)}}" hidden>Rp. {{number_format($denda, 0 , ',', '.')}}
+                                        @else 
+                                        <input name="denda" value="0" hidden>Rp.{{number_format(0, 0 , ',', '.')}}
+                                        @endif
+                                        </td>
+                                    <td>
+                                    </td>
+                                    @elseif ($s->status == "K")
+                                    <td>Dikembalikan</td>
+                                    <td>Rp.{{ number_format($s->denda, 0, ',', '.') }}</td>
+                                    @endif
                             </tr>
                             @endforeach
                     </tfoot>

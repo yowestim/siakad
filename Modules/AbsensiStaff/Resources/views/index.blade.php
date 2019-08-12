@@ -13,7 +13,6 @@
                     <th class="column2">Nama Staff</th>
                     <th class="column3">Alamat</th>
                     <th class="column4">No. HP</th>
-                    <th class="column5">Hari Ke</th>
                     <th class="column6">Absensi</th>
                 </tr>
             </thead>
@@ -30,7 +29,6 @@
                 @endif
                 <td>{{$item->alamat}}</td>
                 <td>{{$item->nomor_telepon}}</td>
-                <td>{{($item->masuk + $item->sakit + $item->ijin + $item->alfa) + 1}}</td>
                 <td>
                     <select class="form-control" name="select_absen[]">
                         <option name="masuk" value="masuk">Masuk</option>

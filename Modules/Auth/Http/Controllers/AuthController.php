@@ -169,11 +169,22 @@ class AuthController extends Controller
         print_r(Session::get('login'));
         if (Session::get('login')) {
             $data =  Session::get('id_staff');
-            $gils = DB::table('staff')
-            ->leftjoin('absensi_staff', 'absensi_staff.id_staff', '=', 'staff.id_staff')
-            ->select('staff.*', 'absensi_staff.masuk', 'absensi_staff.sakit', 'absensi_staff.ijin', 'absensi_staff.alfa')
-            ->where('staff.id_staff' , $data)
+            // $gils = DB::table('staff')
+            // ->leftjoin('absensi_staff', 'absensi_staff.id_staff', '=', 'staff.id_staff')
+            // ->select('staff.*', 'absensi_staff.masuk', 'absensi_staff.sakit', 'absensi_staff.ijin', 'absensi_staff.alfa')
+            // ->where('staff.id_staff' , $data)
+            // ->first();
+            $gils = DB::table('absensi_staff')
+            ->join('staff', 'absensi_staff.id_staff', '=', 'staff.id_staff')
+            ->select(DB::raw('SUM(absensi_staff.masuk) AS masuk,
+            SUM(absensi_staff.ijin) AS ijin,
+            SUM(absensi_staff.alfa) AS alfa,
+            SUM(absensi_staff.sakit) AS sakit,
+            absensi_staff.id_absensi_staff, staff.*'))
+            ->groupBy('id_staff')
+            ->where('absensi_staff.id_staff', $data)
             ->first();
+            // dd($gils);
             return view('auth::admin.index', compact('gils', 'data'));
         }else{
             Alert::error('You must login first!','Warning')->autoclose(2000);

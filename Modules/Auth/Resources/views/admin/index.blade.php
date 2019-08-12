@@ -84,7 +84,7 @@ rel="stylesheet">
     background-color: #9C27B0 !important;
     color: #fff;
 }
-</style>
+</style> 
     <h3>Selamat Datang {{$gils->nama_staff}}</h3><br>
     @if(($gils->masuk + $gils->sakit + $gils->ijin + $gils->alfa) != 0)
     <input value="{{$muasuk = round($gils->masuk / ($gils->masuk + $gils->sakit + $gils->ijin + $gils->alfa) * 100)}}" hidden>

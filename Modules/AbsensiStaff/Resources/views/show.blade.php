@@ -14,7 +14,6 @@
                     <th class="column6">Sakit</th>
                     <th class="column7">Ijin</th>
                     <th class="column8">Alfa</th>
-                    <th class="column9">Dalam ( Hari )</th>
                     <th class="column10">Aksi</th>
                 </tr>
             </thead>
@@ -35,7 +34,6 @@
                 <td>{{ round(( $item->sakit / ( $item->masuk + $item->sakit + $item->ijin + $item->alfa ) ) * 100)}} %</td>
                 <td>{{ round(( $item->ijin / ( $item->masuk + $item->sakit + $item->ijin + $item->alfa ) ) * 100)}} %</td>
                 <td>{{ round(( $item->alfa / ( $item->masuk + $item->sakit + $item->ijin + $item->alfa ) ) * 100)}} %</td>
-                <td>{{$item->masuk + $item->sakit + $item->ijin + $item->alfa}} Hari</td>
                 <td><a type="button" href="/absenstaff/destroy/{{$item->id_absensi_staff}}" class="btn btn-danger">Delete</a></td>
             </tr>
             @endforeach

@@ -18,8 +18,6 @@ class AbsensiStaffController extends Controller
     public function index()
     {
         $staff = DB::table('staff')
-        ->leftjoin('absensi_staff', 'absensi_staff.id_staff' , '=', 'staff.id_staff')
-        ->select('staff.*', 'absensi_staff.masuk', 'absensi_staff.sakit', 'absensi_staff.ijin', 'absensi_staff.alfa')
         ->get();
         return view('absensistaff::index', ['staff' => $staff]);
     }
@@ -39,6 +37,7 @@ class AbsensiStaffController extends Controller
      * @return Response
      */
 
+    
      public function store(Request $request)
      {
          for ($i=0; $i < count($request->select_absen); $i++) { 
@@ -50,67 +49,39 @@ class AbsensiStaffController extends Controller
 
     public function storeItem($select_absen, $id)
     {
-        $absen = ModelAbsen::where("id_staff", "=", $id)->first();
-        // echo json_encode($absen);
-        // return;
         if ($select_absen == "masuk") {
-            if ($absen != null) {
-                $absen->masuk = $absen->masuk + 1;
-                $absen->save();
-            } else {
-                $data = DB::table('absensi_staff')->where('id_staff',$id)
-                ->insert([
-                    'id_staff' => $id,
-                    'masuk' => 1,
-                    'sakit' => 0,
-                    'ijin' => 0,
-                    'alfa' => 0
-                ]);
-            }
+            $cok = new ModelAbsen();
+            $cok->id_staff = $id;
+            $cok->masuk = 1;
+            $cok->ijin = 0;
+            $cok->sakit = 0;
+            $cok->alfa = 0;
+            $cok->save();
         }elseif ($select_absen == "sakit") {
-            if ($absen != null) {
-                $absen->sakit = $absen->sakit + 1;
-                $absen->save();
-            } else {
-                $data = DB::table('absensi_staff')->where('id_staff',$id)
-                ->insert([
-                    'id_staff' => $id,
-                    'masuk' => 0,
-                    'sakit' => 1,
-                    'ijin' => 0,
-                    'alfa' => 0
-                ]);
-            }
+            $cok = new ModelAbsen();
+            $cok->id_staff = $id;
+            $cok->masuk = 0;
+            $cok->ijin = 0;
+            $cok->sakit = 1;
+            $cok->alfa = 0;
+            $cok->save();
         }elseif ($select_absen == "ijin") {
-            if ($absen != null) {
-                $absen->ijin = $absen->ijin + 1;
-                $absen->save();
-            } else {
-                $data = DB::table('absensi_staff')->where('id_staff',$id)
-                ->insert([
-                    'id_staff' => $id,
-                    'masuk' => 0,
-                    'sakit' => 0,
-                    'ijin' => 1,
-                    'alfa' => 0
-                ]);
-            }
+            $cok = new ModelAbsen();
+            $cok->id_staff = $id;
+            $cok->masuk = 0;
+            $cok->ijin = 1;
+            $cok->sakit = 0;
+            $cok->alfa = 0;
+            $cok->save();
         }elseif ($select_absen == "alfa") {
-            if ($absen != null) {
-                $absen->alfa = $absen->alfa + 1;
-                $absen->save();
-            } else {
-                $data = DB::table('absensi_staff')->where('id_staff',$id)
-                ->insert([
-                    'id_staff' => $id,
-                    'masuk' => 0,
-                    'sakit' => 0,
-                    'ijin' => 0,
-                    'alfa' => 1
-                ]);
-            }
+            $cok = new ModelAbsen();
+            $cok->id_staff = $id;
+            $cok->masuk = 0;
+            $cok->ijin = 0;
+            $cok->sakit = 0;
+            $cok->alfa = 1;
+            $cok->save();
         }
-        // return redirect('/absenstaff');
     }
 
     /**
@@ -121,8 +92,15 @@ class AbsensiStaffController extends Controller
     public function show()
     {
         $absensistaff = DB::table('absensi_staff')
+        ->select(DB::raw(' SUM(absensi_staff.masuk) AS masuk,
+        SUM(absensi_staff.ijin) AS ijin,
+		SUM(absensi_staff.alfa) AS alfa,
+        SUM(absensi_staff.sakit) AS sakit,
+        absensi_staff.id_absensi_staff, staff.*'))
         ->join('staff', 'absensi_staff.id_staff', '=', 'staff.id_staff')
+        ->groupBy('id_staff')
         ->get();
+        // dd($absensistaff);
         return view('absensistaff::show', ['absensistaff' => $absensistaff]);
     }
 
