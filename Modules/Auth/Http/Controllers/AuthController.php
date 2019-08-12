@@ -1,7 +1,6 @@
 <?php
 
 namespace Modules\Auth\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -10,6 +9,7 @@ use Modules\Auth\Entities\Role;
 use Modules\Auth\Entities\Guru;
 use Modules\Auth\Entities\Siswa;
 use Modules\Auth\Entities\Staff;
+use Modules\Auth\Events\Notifikasi;
 use Redirect;
 use Session;
 use Alert;
@@ -44,7 +44,7 @@ class AuthController extends Controller
                 Session::put('id_user',$data->id_user);
                 Session::put('id_roles',$data->id_roles);
                 Session::put('nama_staff',$data->nama_staff);
-                Session::put('login',true);
+                Session::put('loginstaff',true);
                 echo 1;
             }else{
                 echo 0;
@@ -68,7 +68,7 @@ class AuthController extends Controller
                 Session::put('id_guru',$data->id_guru);
                 Session::put('id_roles',$data->id_roles);
                 Session::put('nama_guru',$data->nama_guru);
-                Session::put('login',true);
+                Session::put('loginguru',true);
                 echo 1;
             }else{
                 echo 0;
@@ -91,8 +91,9 @@ class AuthController extends Controller
                 Session::put('username',$data->username);
                 Session::put('id_user',$data->id_user);
                 Session::put('id_roles',$data->id_roles);
+                Session::put('id_siswa',$data->id_siswa);
                 Session::put('nama_siswa',$data->nama_siswa);
-                Session::put('login',true);
+                Session::put('loginsiswa',true);
                 echo 1;
             }else{
                 echo 0;
@@ -166,7 +167,7 @@ class AuthController extends Controller
     public function staffIndex()
     {
         print_r(Session::get('login'));
-        if (Session::get('login')) {
+        if (Session::get('loginstaff')) {
             $data =  Session::get('nama_staff');
             return view('auth::admin.index',compact('data'));
         }else{
@@ -176,10 +177,11 @@ class AuthController extends Controller
     }
     public function guruIndex()
     {
-        print_r(Session::get('login'));
-        if (Session::get('login')) {
+        // print_r(Session::get('login'));
+        if (Session::get('loginguru')) {
             $data = Session::get('nama_guru');
-            return view('auth::guru.index',compact('data'));
+            $dataSiswa = DB::table('siswa')->get();
+            return view('auth::guru.index',compact('data','dataSiswa'));
         }else{
             Alert::error('You must login first!','Warning')->autoclose(2000);
             return redirect('loginguru');
@@ -188,9 +190,12 @@ class AuthController extends Controller
     public function siswaIndex()
     {
         print_r(Session::get('login'));
-        if (Session::get('login')) {
+        if (Session::get('loginsiswa')) {
             $data = Session::get('nama_siswa');
-            return view('auth::siswa.index',compact('data'));
+            $id = Session::get('id_siswa');
+            $notif = DB::table('notifikasi')->where('id_siswa',$id)->count();
+            // dd($notif);
+            return view('auth::siswa.index',compact('data','notif'));
         }else{
             Alert::error('You must login first!','Warning')->autoclose(2000);
             return redirect('loginsiswa');
@@ -213,5 +218,18 @@ class AuthController extends Controller
         Session::flush();
         Redirect::back();
         return redirect('loginsiswa')->with('alert','Kamu sudah Logout!');
+    }
+    public function tesnotif(Request $request)
+    {
+        if ($request->id_roles == 1) {
+            $user = new Notif;
+            $user->id_siswa = $request->id_siswa;
+            $user->id_roles = $request->id_roles;
+            $user->jenis = 'P';
+            $user->deskripsi = $request->deskripsisiswa;
+            $user->save();
+            event(new Notifikasi($user));
+        }
+        return redirect('guru/index');
     }
 }
