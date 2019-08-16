@@ -13,6 +13,7 @@
 <!-- Morris.js charts -->
 <script src="{{asset('bower_components/raphael/raphael.min.js')}}"></script>
 <script src="{{asset('bower_components/morris.js/morris.min.js')}}"></script>
+<script src="{{asset('bower_components/chart.js/Chart.js')}}"></script>
 <!-- Sparkline -->
 <script src="{{asset('bower_components/jquery-sparkline/dist/jquery.sparkline.min.js')}}"></script>
 <!-- jvectormap -->
