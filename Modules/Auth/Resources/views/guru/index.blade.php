@@ -1,30 +1,35 @@
 @extends('apps.layout')
 @section('content')
 <h3>Anda Guru!</h3>
-<form action="{{url('testnotif')}}" class="appointment-form" method="get">
+<form action="{{url('testnotif')}}" class="appointment-form" method="get" novalidate>
   <div class="main">
     <div class="container">
       <div class="form-group">
         <div class="select-list">
           <h3>Roles</h3>
-          <select onchange="pilih()" name="roles" id="roles">
+          <select onchange="pilih()" name="roles" id="roles" required>
             <option selected value="" disabled>Pilih Role . . .</option>
-            <option name="id_siswa" value="1">Siswa</option>
-            <option name="id_staff" value="2">Staff</option>
+            <option name="id_siswa" value="1" required>Siswa</option>
+            <option name="id_staff" value="2" required>Staff</option>
           </select>
         </div>
         <div id="siswa">
           <select name="id_siswa">
             @foreach ($dataSiswa as $item)
-            <option value="{{$item->id_siswa}}">{{$item->nama_siswa}}</option>
+            <option value="{{$item->id_siswa}}" required>{{$item->nama_siswa}}</option>
             @endforeach
           </select>
           <label>Deskripsi</label>
-          <input type="text" name="deskripsisiswa">
+          <input type="text" required name="deskripsisiswa">
         </div>
         <div id="staff">
+          <select name="id_staff">
+            @foreach ($dataStaff as $item)
+            <option value="{{$item->id_staff}}" required>{{$item->nama_staff}}</option>
+            @endforeach
+          </select>
           <label>Deskripssi</label>
-          <input type="text" name="deskripsistaff">
+          <input type="text" required name="deskripsistaff">
         </div>
       </div>
     </div>
@@ -39,51 +44,33 @@
 @section('navbar')
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
   integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-notifications.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('/css/bootstrap-notifications.min.css')}}">
 
 {{-- <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script> --}}
+<div class="collapse navbar-collapse">
+  <ul class="nav navbar-nav">
+    <li class="dropdown dropdown-notifications">
+      <a href="#notifications-panel" class="dropdown-toggle" data-toggle="dropdown">
+        <i data-count="0" class="glyphicon glyphicon-bell notification-icon"></i>
+      </a>
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-        data-target="#bs-example-navbar-collapse-9" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Demo App</a>
-    </div>
-
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li class="dropdown dropdown-notifications">
-          <a href="#notifications-panel" class="dropdown-toggle" data-toggle="dropdown">
-            <i data-count="0" class="glyphicon glyphicon-bell notification-icon"></i>
-          </a>
-
-          <div class="dropdown-container">
-            <div class="dropdown-toolbar">
-              <div class="dropdown-toolbar-actions">
-                <a href="#">Mark all as read</a>
-              </div>
-              <h3 class="dropdown-toolbar-title">Notifications (<span class="notif-count">0</span>)</h3>
-            </div>
-            <ul class="dropdown-menu">
-            </ul>
-            <div class="dropdown-footer text-center">
-              <a href="#">View All</a>
-            </div>
+      <div class="dropdown-container" style="right:10%">
+        <div class="dropdown-toolbar">
+          <div class="dropdown-toolbar-actions">
+            <a href="#">Mark all as read</a>
           </div>
-        </li>
-        <li><a href="#">Timeline</a></li>
-        <li><a href="#">Friends</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+          <h3 class="dropdown-toolbar-title">Notifications (<span class="notif-count">0</span>)</h3>
+        </div>
+        <ul class="dropdown-menu">
+        </ul>
+        <div class="dropdown-footer text-center">
+          <a href="#">View All</a>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="//js.pusher.com/3.1/pusher.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
@@ -138,8 +125,8 @@
                   </div>
                 </div>
                 <div class="media-body">
-                  <strong class="notification-title">`+data.message+`</strong>
-                  <!--p class="notification-desc">Extra description can go here</p-->
+                  <strong class="notification-title">`+data.deskripsi+`</strong>
+                  <p class="notification-desc">Extra description can go here</p>
                   <div class="notification-meta">
                     <small class="timestamp">about a minute ago</small>
                   </div>

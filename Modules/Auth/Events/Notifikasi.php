@@ -12,11 +12,12 @@ use Illuminate\Http\Request;
 class Notifikasi implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $message;
-    public $id_siswa;
+    public $nama_guru;
+    public $id_siswa = null;
     public $id_roles;
     public $deskripsi;
-    public $id_staff;
+    public $jenis;
+    public $id_staff = null;
 
     /**
      * Create a new event instance.
@@ -24,12 +25,14 @@ class Notifikasi implements ShouldBroadcast
      * @return void
      */
 
-    public function __construct($id_staff,$id_siswa,$id_roles,$deskripsi)
+    public function __construct($nama_guru,$id_siswa,$id_roles,$id_staff,$deskripsi,$jenis)
     {
-        $this->id_staff = $id_staff;
+        $this->nama_guru = $nama_guru;
         $this->id_siswa = $id_siswa;
         $this->id_roles = $id_roles;
         $this->deskripsi = $deskripsi;
+        $this->id_staff = $id_staff;
+        $this->jenis = $jenis;
     }
 
     /**
@@ -44,10 +47,12 @@ class Notifikasi implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
+            'nama_guru' => $this->nama_guru,
             'id_siswa' => $this->id_siswa,
             'id_roles' => $this->id_roles,
-            'id_staff' => $this->id_staff,
-            'deskripsi' => $this->deskripsi
+            'jenis' => $this->jenis,
+            'deskripsi' => $this->deskripsi,
+            'id_staff' => $this->id_staff
         ];
     }
 }

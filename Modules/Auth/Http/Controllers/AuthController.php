@@ -9,6 +9,7 @@ use Modules\Auth\Entities\Role;
 use Modules\Auth\Entities\Guru;
 use Modules\Auth\Entities\Siswa;
 use Modules\Auth\Entities\Staff;
+use Modules\Auth\Entities\Notif;
 use Modules\Auth\Events\Notifikasi;
 use Redirect;
 use Session;
@@ -181,7 +182,8 @@ class AuthController extends Controller
         if (Session::get('loginguru')) {
             $data = Session::get('nama_guru');
             $dataSiswa = DB::table('siswa')->get();
-            return view('auth::guru.index',compact('data','dataSiswa'));
+            $dataStaff = Staff::all();
+            return view('auth::guru.index',compact('data','dataSiswa','dataStaff'));
         }else{
             Alert::error('You must login first!','Warning')->autoclose(2000);
             return redirect('loginguru');
@@ -221,14 +223,25 @@ class AuthController extends Controller
     }
     public function tesnotif(Request $request)
     {
-        if ($request->id_roles == 1) {
+        $namaGuru = Session::get('nama_guru');
+        if ($request->roles == 1) {        
             $user = new Notif;
             $user->id_siswa = $request->id_siswa;
             $user->id_roles = $request->id_roles;
             $user->jenis = 'P';
+            $user->id_staff = null;
             $user->deskripsi = $request->deskripsisiswa;
             $user->save();
-            event(new Notifikasi($user));
+            event(new Notifikasi($namaGuru,$user->id_siswa,$user->id_roles,$user->id_staff,$user->deskripsi,$user->jenis));
+        }else{
+            $staff = new Notif;
+            $staff->id_staff = $request->id_staff;
+            $staff->id_roles = $request->roles;
+            $staff->jenis = 'P';
+            $staff->id_siswa = null;
+            $staff->deskripsi = $request->deskripsistaff;
+            $staff->save();
+            event(new Notifikasi($namaGuru,$staff->id_siswa,$staff->id_staff,$staff->id_roles,$staff->deskripsi,$staff->jenis));
         }
         return redirect('guru/index');
     }
