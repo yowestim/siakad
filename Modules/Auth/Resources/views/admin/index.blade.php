@@ -85,8 +85,8 @@ rel="stylesheet">
     color: #fff;
 }
 </style>
-  
-    <h3>Selamat Datang {{$nama->nama_staff}}</h3><br>
+
+    <h3>Selamat Datang {{$nama}}</h3><br>
     @if($gils !=null)
     <input value="{{$muasuk = round($gils->masuk / ($gils->masuk + $gils->sakit + $gils->ijin + $gils->alfa) * 100)}}" hidden>
     <div class="row">
@@ -236,7 +236,7 @@ rel="stylesheet">
 <li class="dropdown user user-menu">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="user-image" alt="User Image">
-          <span class="hidden-xs">{{$nama->nama_staff}}</span>
+          <span class="hidden-xs">{{$nama}}</span>
         </a>
         <ul class="dropdown-menu">
           <!-- User image -->
@@ -244,7 +244,7 @@ rel="stylesheet">
             <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
 
             <p>
-              {{$nama->nama_staff}}
+              {{$nama}}
               <small>Member since Nov. 2012</small>
             </p>
           </li>
@@ -276,5 +276,5 @@ rel="stylesheet">
       </li>
 @endsection
 @section('name')
-    {{$nama->nama_staff}}
+    {{$nama}}
 @endsection

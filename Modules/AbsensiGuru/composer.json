@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/absensiguru",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\AbsensiGuru\\Providers\\AbsensiGuruServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\AbsensiGuru\\": ""
+        }
+    }
+}

@@ -126,11 +126,11 @@ class AuthController extends Controller
             $dataUser->username = $request->usernamee;
             $dataUser->password = bcrypt($request->passwordd);
             $dataUser->id_staff = $dataStaff->id_staff;
-            $dataUser->id_roles = $request->roles;  
+            $dataUser->id_roles = $request->roles;
             $dataUser->id_staff = $dataStaff->id;
             $dataUser->save();
             return redirect('loginstaff');
-            
+
         }else if($request->roles == '4'){
             $dataGuru = new Guru;
             $dataGuru->nama_guru = $request->namee;
@@ -143,7 +143,7 @@ class AuthController extends Controller
             $dataUser->password = bcrypt($request->passwordd);
             $dataUser->id_guru = $dataGuru->id_guru;
             $dataUser->id_roles = $request->roles;
-            $dataUser->id_guru = $dataGuru->id;  
+            $dataUser->id_guru = $dataGuru->id;
             $dataUser->save();
             return redirect('loginguru');
 
@@ -158,7 +158,7 @@ class AuthController extends Controller
             $dataUser->username = $request->username;
             $dataUser->password = bcrypt($request->password);
             $dataUser->id_siswa = $dataSiswa->id_siswa;
-            $dataUser->id_roles = $request->roles;  
+            $dataUser->id_roles = $request->roles;
             $dataUser->id_siswa = $dataSiswa->id;
             $dataUser->save();
             return redirect('loginsiswa');
@@ -169,14 +169,7 @@ class AuthController extends Controller
         print_r(Session::get('login'));
         if (Session::get('login')) {
             $data =  Session::get('id_staff');
-            // $gils = DB::table('staff')
-            // ->leftjoin('absensi_staff', 'absensi_staff.id_staff', '=', 'staff.id_staff')
-            // ->select('staff.*', 'absensi_staff.masuk', 'absensi_staff.sakit', 'absensi_staff.ijin', 'absensi_staff.alfa')
-            // ->where('staff.id_staff' , $data)
-            // ->first();
-            $nama = DB::table('staff')
-            ->where('id_staff', $data)
-            ->first();
+            $nama = Session::get('nama_guru');
             $gils = DB::table('absensi_staff')
             ->join('staff', 'absensi_staff.id_staff', '=', 'staff.id_staff')
             ->select(DB::raw('SUM(absensi_staff.masuk) AS masuk,
@@ -197,8 +190,19 @@ class AuthController extends Controller
     {
         print_r(Session::get('login'));
         if (Session::get('login')) {
-            $data = Session::get('nama_guru');
-            return view('auth::guru.index',compact('data'));
+            $data = Session::get('id_guru');
+            $nama = Session::get('nama_guru');
+            $gils = DB::table('absensi_guru')
+            ->join('guru', 'absensi_guru.id_guru', '=', 'guru.id_guru')
+            ->select(DB::raw('SUM(absensi_guru.masuk) AS masuk,
+            SUM(absensi_guru.ijin) AS ijin,
+            SUM(absensi_guru.alfa) AS alfa,
+            SUM(absensi_guru.sakit) AS sakit,
+            absensi_guru.id_absensi_guru, guru.*'))
+            ->groupBy('id_guru')
+            ->where('absensi_guru.id_guru', $data)
+            ->first();
+            return view('auth::guru.index', compact('gils', 'data', 'nama'));
         }else{
             Alert::error('You must login first!','Warning')->autoclose(2000);
             return redirect('loginguru');
@@ -210,7 +214,7 @@ class AuthController extends Controller
         if (Session::get('login')) {
             $data = Session::get('id_siswa');
             $soden = DB::table('siswa')
-            ->where('siswa.id_siswa', $data)    
+            ->where('siswa.id_siswa', $data)
             ->first();
             return view('auth::siswa.index',compact('data', 'soden'));
         }else{
@@ -229,7 +233,7 @@ class AuthController extends Controller
             $soden = DB::table('siswa')
             ->leftjoin('transaksi_pinjaman' , 'transaksi_pinjaman.id_siswa' , '=', 'siswa.id_siswa')
             ->select('siswa.*','transaksi_pinjaman.id_transaksi_pinjaman', 'transaksi_pinjaman.denda')
-            ->where('siswa.id_siswa', $data)    
+            ->where('siswa.id_siswa', $data)
             ->first();
             return view('auth::siswa.tpb',compact('data', 'gatel', 'soden'));
         }else{
@@ -246,7 +250,7 @@ class AuthController extends Controller
             ->join('klasifikasi', 'klasifikasi.id_klasifikasi', '=', 'buku.id_klasifikasi')
             ->get();
             $soden = DB::table('siswa')
-            ->where('siswa.id_siswa', $data)    
+            ->where('siswa.id_siswa', $data)
             ->first();
             $riwayat = DB::table('transaksi_pinjaman')
             ->join('buku', 'buku.id_buku', '=', 'transaksi_pinjaman.id_buku')
@@ -293,12 +297,12 @@ class AuthController extends Controller
                 'status' => 'P',
                 'denda' => 0
             ]);
-            Alert::success('Sukses','Warning')->autoclose(2000);            
+            Alert::success('Sukses','Warning')->autoclose(2000);
             return redirect('siswa/tpb');
         }else{
             Alert::error('You must login first!','Warning')->autoclose(2000);
             return redirect('loginsiswa');
         }
-        
+
     }
 }
