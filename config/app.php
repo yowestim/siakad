@@ -161,8 +161,9 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
+        UxWeb\SweetAlert\SweetAlertServiceProvider::class,
+        // Barryvdh\DomPDF\ServiceProvider::class,
+        // Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -226,8 +227,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'PDF' => Barryvdh\DomPDF\Facade::class,
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Alert' => UxWeb\SweetAlert\SweetAlert::class,
+        // 'PDF' => Barryvdh\DomPDF\Facade::class,
+        // 'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 
