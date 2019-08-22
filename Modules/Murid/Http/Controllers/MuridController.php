@@ -27,7 +27,7 @@ class MuridController extends Controller
 public function index(Request $request)
 {
 $spp = DB::table('siswa')
-      ->where('id_siswa', 7)
+      ->where('id_siswa', '1')
       ->first();
 //       dd($spp);
 $spp2 = array();
@@ -68,7 +68,7 @@ if($request->tgl_awal == "" || $request->tgl_akhir == ""){
                         )
                 ->where('masuk', 1)
                 ->first();
-                // dd($chart);
+                // dd($spp);
         return view('murid::index', ['spp' => $spp,'spp2' => $spp2, 'chart' => $chart, 'tgl_awal' => $tgl_awal, 'tgl_akhir' => $tgl_akhir]);
        }else {
         $tgl_awal = $request->tgl_awal;
@@ -92,7 +92,8 @@ if($request->tgl_awal == "" || $request->tgl_akhir == ""){
                 ->whereBetween('created_at', [$tgl_awal, $tgl_akhir])
                 ->first();
                 return view('murid::index', ['spp' => $spp,'spp2' => $spp2, 'chart' => $chart, 'tgl_awal' => $tgl_awal, 'tgl_akhir' => $tgl_akhir]);
-    }
+                // dd($spp);
+        }
 }
 
 public function save(Request $request)

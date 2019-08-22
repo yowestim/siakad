@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Staff\Entities\Staff;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Export\StaffExport;
+use PDF;
+use DB;
 
 
 class StaffController extends Controller
@@ -15,10 +19,75 @@ class StaffController extends Controller
      * @return Response
      */
 
-    public function index()
+    public $bulan = ['Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember'];
+
+    public function index(Request $request)
     {
+        $absen1 = DB::table('staff')
+        ->where('id_staff', '1')
+        ->first();
+            //   dd($absen1);
+        $absen2 = array();
     	$staff = Staff::all();
-    	return view('staff::index', ['staff' => $staff]);
+        // return view('staff::index', ['staff' => $staff]);
+        if($request->tgl_awal == "" || $request->tgl_akhir == ""){
+            $tgl_awal = "";
+            $tgl_akhir = "";
+            $chart = DB::table('absensi_staff')
+                        ->select(
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 1 THEN 1 ELSE 0 END ) ) AS `Januari` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 2 THEN 1 ELSE 0 END ) ) AS `Februari` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 3 THEN 1 ELSE 0 END ) ) AS `Maret` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 4 THEN 1 ELSE 0 END ) ) AS `April` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 5 THEN 1 ELSE 0 END ) ) AS `Mei` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 6 THEN 1 ELSE 0 END ) ) AS `Juni` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 7 THEN 1 ELSE 0 END ) ) AS `Juli` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 8 THEN 1 ELSE 0 END ) ) AS `Agustus` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 9 THEN 1 ELSE 0 END ) ) AS `September` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 10 THEN 1 ELSE 0 END ) ) AS `Oktober` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 11 THEN 1 ELSE 0 END ) ) AS `November` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 12 THEN 1 ELSE 0 END ) ) AS `Desember` '),
+                                )
+                        ->where('masuk', 1)
+                        ->first();
+                        // dd($absen);            
+                return view('staff::index',['staff' => $staff,'absen1' => $absen1,'absen2' => $absen2, 'chart' => $chart, 'tgl_awal' => $tgl_awal, 'tgl_akhir' => $tgl_akhir]);
+               }else {
+                $tgl_awal = $request->tgl_awal;
+                $tgl_akhir = $request->tgl_akhir;
+                $chart = DB::table('absensi_staff')
+                        ->select(
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 1 THEN 1 ELSE 0 END ) ) AS `Januari` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 2 THEN 1 ELSE 0 END ) ) AS `Februari` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 3 THEN 1 ELSE 0 END ) ) AS `Maret` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 4 THEN 1 ELSE 0 END ) ) AS `April` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 5 THEN 1 ELSE 0 END ) ) AS `Mei` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 6 THEN 1 ELSE 0 END ) ) AS `Juni` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 7 THEN 1 ELSE 0 END ) ) AS `Juli` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 8 THEN 1 ELSE 0 END ) ) AS `Agustus` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 9 THEN 1 ELSE 0 END ) ) AS `September` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 10 THEN 1 ELSE 0 END ) ) AS `Oktober` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 11 THEN 1 ELSE 0 END ) ) AS `November` '),
+                                DB::raw('sum( ( CASE MONTH ( `absensi_staff`.`created_at` ) WHEN 12 THEN 1 ELSE 0 END ) ) AS `Desember` '),
+                                )
+                        ->where('masuk', 1)
+                        ->whereBetween('created_at', [$tgl_awal, $tgl_akhir])
+                        ->first();
+                        return view('staff::index',['absen1' => $absen1,'absen2' => $absen2, 'chart' => $chart, 'tgl_awal' => $tgl_awal, 'tgl_akhir' => $tgl_akhir]);
+                        // 
+                        // dd($absen);
+                }
     }
     public function tambah()
     {
@@ -80,4 +149,26 @@ class StaffController extends Controller
         $pegawai->delete();
         return redirect('/staff');
     }
+
+public function cetak_pdf()
+{
+$absen = DB::table('absensi_staff')
+
+        ->join('staff','staff.id_staff','absensi_staff.id_staff')
+        // ->select('staff.nama_staff','absensi_staff.ijin','absensi_staff.alfa',
+        // 'absensi_staff.sakit','absensi_staff.masuk')
+        ->select('staff.nama_staff', 
+                DB::raw('SUM(absensi_staff.ijin) as ijin'),
+                DB::raw('SUM(absensi_staff.alfa) as alfa'),
+                DB::raw('SUM(absensi_staff.sakit) as sakit'),
+                DB::raw('SUM(absensi_staff.masuk) as masuk'))    
+        ->groupby('staff.nama_staff')
+        ->get();
+$pdf = PDF::loadview('staff::absen_pdf',['absen'=>$absen]);
+return $pdf->download('laporan-absen-pdf.pdf');
+}
+public function cetak_excel()
+{
+return Excel::download(new StaffExport, 'Laporan-absen-Excel.xlsx');
+}
 }
